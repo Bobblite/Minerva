@@ -1,0 +1,7 @@
+﻿  minerva_vulkan_instance.cpp
+D:\GitHub\Minerva\Minerva\Minerva\MinervaVulkan\minerva_vulkan_instance.h(39,10): warning C4100: 'pUserData': unreferenced formal parameter
+D:\GitHub\Minerva\Minerva\Minerva\MinervaVulkan\minerva_vulkan_instance.h(37,36): warning C4100: 'messageType': unreferenced formal parameter
+D:\GitHub\Minerva\Minerva\Minerva\MinervaVulkan\minerva_vulkan_instance.h(36,43): warning C4100: 'messageSeverity': unreferenced formal parameter
+D:\GitHub\Minerva\Minerva\Minerva\MinervaVulkan\minerva_vulkan_instance.cpp(60,48): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+D:\GitHub\Minerva\Minerva\Minerva\MinervaVulkan\minerva_vulkan_instance.cpp(70,56): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+  Minerva.vcxproj -> D:\GitHub\Minerva\Minerva\x64\Debug\Minerva.exe
