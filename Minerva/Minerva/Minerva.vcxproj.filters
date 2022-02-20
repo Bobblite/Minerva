@@ -27,6 +27,18 @@
     <ClCompile Include="MinervaAPI\Minerva_Exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_device.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinervaAPI\Minerva_Device.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinervaAPI\Minerva_Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MinervaVulkan\minerva_vulkan_instance.h">
@@ -39,6 +51,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MinervaAPI\Minerva_Exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaAPI\Minerva_Device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaAPI\Minerva_Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

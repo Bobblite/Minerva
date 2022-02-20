@@ -89,14 +89,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MinervaAPI\Minerva_Device.cpp" />
     <ClCompile Include="MinervaAPI\Minerva_Exception.cpp" />
     <ClCompile Include="MinervaAPI\Minerva_Instance.cpp" />
+    <ClCompile Include="MinervaAPI\Minerva_Window.cpp" />
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_device.cpp" />
     <ClCompile Include="MinervaVulkan\minerva_vulkan_instance.cpp" />
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MinervaAPI\Minerva.h" />
+    <ClInclude Include="MinervaAPI\Minerva_Device.h" />
     <ClInclude Include="MinervaAPI\Minerva_Exception.h" />
     <ClInclude Include="MinervaAPI\Minerva_Instance.h" />
+    <ClInclude Include="MinervaAPI\Minerva_Window.h" />
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_window.h" />
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_device.h" />
     <ClInclude Include="MinervaVulkan\minerva_vulkan_instance.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -10,9 +10,9 @@ namespace Minerva
 		std::cout << "Destroying Minerva::Instance object\n";
 	}
 
-	void CreateInstance(Instance& _instance, const Minerva::Vulkan::Instance::Setup& _setup)
+	void CreateInstance(Instance& _instance, const Minerva::Vulkan::Instance::Setup& _setup, Minerva::Vulkan::Instance::ErrorCB* _errorCB, Minerva::Vulkan::Instance::WarnCB* _warnCB)
 	{
-		_instance.m_pVKInstanceHandle = std::make_unique<Minerva::Vulkan::Instance>();
+		_instance.m_pVKInstanceHandle = std::make_shared<Minerva::Vulkan::Instance>();
 
 		if (!_instance.m_pVKInstanceHandle)
 		{
@@ -31,13 +31,9 @@ namespace Minerva
 		{
 
 		}*/
-		try
-		{
-			_instance.m_pVKInstanceHandle->CreateVKInstance(_setup);
-		}
-		catch (const MinervaException& e)
-		{
-			std::cout << e.what();
-		}
+
+		_instance.m_pVKInstanceHandle->CreateVKInstance(_setup, _errorCB, _warnCB);
+		//_instance.m_pVKInstanceHandle->m_Self = _instance.m_pVKInstanceHandle;
+
 	}
 }
