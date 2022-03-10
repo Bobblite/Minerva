@@ -18,25 +18,40 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MinervaAPI\Minerva_Instance.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MinervaVulkan\minerva_vulkan_instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MinervaAPI\Minerva_Exception.cpp">
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MinervaVulkan\minerva_vulkan_device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Minerva\Minerva_Instance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="MinervaVulkan\minerva_vulkan_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MinervaAPI\Minerva_Device.cpp">
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MinervaAPI\Minerva_Window.cpp">
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_pipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_renderpass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_cmdbuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_vertex_descriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinervaVulkan\minerva_vulkan_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,25 +59,100 @@
     <ClInclude Include="MinervaVulkan\minerva_vulkan_instance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MinervaAPI\Minerva_Instance.h">
+    <ClInclude Include="MinervaVulkan\minerva_vulkan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MinervaAPI\Minerva.h">
+    <ClInclude Include="Minerva\Minerva.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MinervaAPI\Minerva_Exception.h">
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MinervaVulkan\minerva_vulkan_device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MinervaAPI\Minerva_Device.h">
+    <ClInclude Include="Minerva\Minerva_Device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Instance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MinervaVulkan\minerva_vulkan_window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MinervaAPI\Minerva_Window.h">
+    <ClInclude Include="Minerva\Minerva_Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_pipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Pipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_renderpass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Renderpass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Window_Inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Shader_Inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Renderpass_Inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Pipeline_Inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Instance_Inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Device_Inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_cmdbuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_CmdBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_CmdBuffer_Inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Vertex_Descriptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Vertex_Descriptor_Inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_vertex_descriptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Buffer_Inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinervaVulkan\minerva_vulkan_input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Input_Inline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
