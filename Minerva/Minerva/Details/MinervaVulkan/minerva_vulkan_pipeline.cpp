@@ -69,15 +69,13 @@ namespace Minerva::Vulkan
 
 	void Pipeline::CreateGraphicsPipeline()
 	{
-		// Describe Vertex Input - Format of vertex data passed into vertex shader
-		/*VkPipelineVertexInputStateCreateInfo vertexInputInfo{
-			.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
-			.vertexBindingDescriptionCount = 1,
-			.pVertexBindingDescriptions = nullptr,
-			.vertexAttributeDescriptionCount = 0,
-			.pVertexAttributeDescriptions = nullptr
-		};*/
+		//std::vector<VkDynamicState> dynamicStates{
+		//	VK_DYNAMIC_STATE_VIEWPORT,
+		//	VK_DYNAMIC_STATE_SCISSOR
+		//};
 
+
+		// Describe Vertex Input - Format of vertex data passed into vertex shader
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo{ m_VKVertexDescriptorHandle->GetPipelineVertexInputCreateInfo() };
 
 		// Fixed Function Stage: Input Assembly
@@ -87,28 +85,28 @@ namespace Minerva::Vulkan
 			.primitiveRestartEnable = VK_FALSE
 		};
 
-		// Viewport and scissoring
-		VkExtent2D swapExtent{ m_VKWindowHandle->GetVKSwapExtent() };
+		//// Set viewport
+		//VkExtent2D swapExtent{ m_VKWindowHandle->GetVKSwapExtent() };
+		//VkViewport viewport{
+		//.x = 0.f,
+		//.y = 0.f,
+		//.width = (float)swapExtent.width,
+		//.height = (float)swapExtent.height,
+		//.minDepth = 0.f,
+		//.maxDepth = 1.f
+		//};
 
-		VkViewport viewport{
-		.x = 0.f,
-		.y = 0.f,
-		.width = (float)swapExtent.width,
-		.height = (float)swapExtent.height,
-		.minDepth = 0.f,
-		.maxDepth = 1.f
-		};
-
-		VkRect2D scissors{};
-		scissors.offset = { 0, 0 };
-		scissors.extent = swapExtent;
+		//// Set scissors
+		//VkRect2D scissors{};
+		//scissors.offset = { 0, 0 };
+		//scissors.extent = swapExtent;
 
 		VkPipelineViewportStateCreateInfo viewportStateCreateInfo{
 			.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO,
 			.viewportCount = 1,
-			.pViewports = &viewport,
+			.pViewports = nullptr,
 			.scissorCount = 1,
-			.pScissors = &scissors
+			.pScissors = nullptr
 		};
 
 		// Fixed Function Stage: Rasterizer
@@ -169,7 +167,7 @@ namespace Minerva::Vulkan
 		// Dynamic States - To change state previously specified without recreating pipeline
 		VkDynamicState dynamicStates[] = {
 			VK_DYNAMIC_STATE_VIEWPORT,
-			VK_DYNAMIC_STATE_LINE_WIDTH
+			VK_DYNAMIC_STATE_SCISSOR
 		};
 
 		VkPipelineDynamicStateCreateInfo dynamicState{};
@@ -212,7 +210,7 @@ namespace Minerva::Vulkan
 			.pMultisampleState = &multisamplingCreateInfo, // Multisampling state when rasterization enabled
 			.pDepthStencilState = nullptr, // Depth or stencil attachment
 			.pColorBlendState = &colorBlendAttachmentStateCreateInfo, // Color blending stage state
-			.pDynamicState = nullptr, // Determines what properties are dynamic and CAN be changed independently of pipeline state
+			.pDynamicState = &dynamicState, // Determines what properties are dynamic and CAN be changed independently of pipeline state
 			.layout = m_VKPipelineLayout, // Uniform/Descriptor set binding
 			.renderPass = m_VKRenderpassHandle->GetVKRenderPass(), // Renderpass describing environment which pipeline can be used.
 			.subpass = 0, // Index of the subpass inside renderpass where pipeline will be used

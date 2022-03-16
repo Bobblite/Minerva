@@ -62,6 +62,28 @@ namespace Minerva::Vulkan
 
 	void CommandBuffer::DrawIndexed(uint32_t _indexCount, uint32_t _instanceCount, uint32_t _firstIndex, int32_t _vertexOffset, uint32_t _firstInstance)
 	{
+		// Setup viewport
+		VkExtent2D frambufferExtent{ m_VKRenderpassHandle->GetFramebufferExtent() };
+		VkViewport viewport{
+			.x = 0.f,
+			.y = 0.f,
+			.width = static_cast<float>(frambufferExtent.width),
+			.height = static_cast<float>(frambufferExtent.height),
+			.minDepth = 0.f,
+			.maxDepth = 1.f
+		};
+
+		// Setup clip scissors
+		VkRect2D scissors{
+			.offset = {0, 0},
+			.extent = frambufferExtent,
+		};
+
+		// Set dynamic states
+		vkCmdSetViewport(m_VKCommandBuffer, 0, 1, &viewport);
+		vkCmdSetScissor(m_VKCommandBuffer, 0, 1, &scissors);
+
+		// Draw
 		vkCmdDrawIndexed(m_VKCommandBuffer, _indexCount, _instanceCount, _firstIndex, _vertexOffset, _firstInstance);
 	}
 

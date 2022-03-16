@@ -304,7 +304,7 @@ namespace Minerva::Vulkan
             {
                 if (wParam != SIZE_MINIMIZED)
                 {
-                    pWin->SetWindowValues(static_cast<int>((lParam & 0xffff0000) >> 16), static_cast<int>(lParam & 0xffff), false);
+                    pWin->SetWindowValues(static_cast<int>(lParam & 0xffff), static_cast<int>((lParam & 0xffff0000) >> 16), false);
                     return 0;
                 }
                 else

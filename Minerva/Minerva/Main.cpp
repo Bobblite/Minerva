@@ -42,43 +42,6 @@ struct PushConstant
 	glm::mat4 MVP;
 };
 
-glm::mat4 setPerspectiveProjection(float _fovy, float _aspect, float _near, float _far) {
-	//assert(glm::abs(aspect - std::numeric_limits<float>::epsilon()) > 0.0f);
-	const float tanHalfFovy = tan(_fovy / 2.f);
-	
-	glm::mat4 projectionMatrix = glm::mat4{ 0.0f };
-	projectionMatrix[0][0] = 1.f / (_aspect * tanHalfFovy);
-	projectionMatrix[1][1] = 1.f / (tanHalfFovy);
-	projectionMatrix[2][2] = _far / (_far - _near);
-	projectionMatrix[2][3] = 1.f;
-	projectionMatrix[3][2] = -(_far * _near) / (_far - _near);
-	return projectionMatrix;
-}
-
-glm::mat4 setViewDirection(glm::vec3 position, glm::vec3 direction, glm::vec3 up) {
-	const glm::vec3 w{ glm::normalize(direction) };
-	const glm::vec3 u{ glm::normalize(glm::cross(w, up)) };
-	const glm::vec3 v{ glm::cross(w, u) };
-
-	glm::mat4 viewMatrix = glm::mat4{ 1.f };
-	viewMatrix[0][0] = u.x;
-	viewMatrix[1][0] = u.y;
-	viewMatrix[2][0] = u.z;
-	viewMatrix[0][1] = v.x;
-	viewMatrix[1][1] = v.y;
-	viewMatrix[2][1] = v.z;
-	viewMatrix[0][2] = w.x;
-	viewMatrix[1][2] = w.y;
-	viewMatrix[2][2] = w.z;
-	viewMatrix[3][0] = -glm::dot(u, position);
-	viewMatrix[3][1] = -glm::dot(v, position);
-	viewMatrix[3][2] = -glm::dot(w, position);
-	return viewMatrix;
-}
-
-glm::mat4 setViewTarget(glm::vec3 position, glm::vec3 target, glm::vec3 up) {
-	return setViewDirection(position, target - position, up);
-}
 
 int main(int argc, const char* argv[])
 {
@@ -174,6 +137,7 @@ int main(int argc, const char* argv[])
 				20, 21, 22,     20, 22, 23    // left
 			};
 
+			// Setup buffers
 			Minerva::Buffer vertexBuffer(device, Minerva::Buffer::Type::VERTEX, vertices.data(), vertices.size() * sizeof(Vertex));
 			Minerva::Buffer indexBuffer(device, Minerva::Buffer::Type::INDEX, indices.data(), indices.size() * sizeof(uint16_t));
 
@@ -181,27 +145,32 @@ int main(int argc, const char* argv[])
 			//camera position
 			glm::vec3 camPos = { 0.f,0.f,-2.f };
 			float camRot = 0.f;
-			glm::mat4 view = setViewTarget(camPos, { 0.f, 0.f, 0.f }, { 0.f, -1.f, 0.f });
+			// Define Camera matrix
+			glm::mat4 view{1.f};
 
-			//camera projection
-			glm::mat4 projection = setPerspectiveProjection(glm::radians(90.f), (float)window.GetWidth() / (float)window.GetHeight(), 1.f, -1.f);
+			//Define Projection matrix
+			glm::mat4 projection;
+			
 			
 			
 			// Setup push constant
 			PushConstant constants;
 			float rotationVal = 0.f;
+
+			// Render loop
 			while (window.ProcessInput())
 			{
 				//! RENDER LOOP
 				// Start render
 				if (!window.BeginRender(pipeline)) continue; // Skip if minimized
-
+				
 				// Bind Commands
 				Minerva::CommandBuffer cmdBuffer{ window.GetCommandBuffer() };
 				cmdBuffer.BindGraphicsPipeline(pipeline);
 				cmdBuffer.BindBuffer(vertexBuffer);
 				cmdBuffer.BindBuffer(indexBuffer);
 
+				// "Logic"
 				if (Minerva::Input::IsPressed(Minerva::Keycode::KEY_Q))
 				{
 					camRot = camRot + 2.f > 360.f ? 0.f : camRot + 2.f; // Reset rotation
@@ -231,8 +200,14 @@ int main(int argc, const char* argv[])
 				{
 					camPos.z -= 0.5f;
 				}
-				view = glm::rotate(glm::mat4{ 1.0f }, glm::radians(camRot), glm::vec3(0, 1, 0)) * setViewTarget(camPos, { 0.f, 0.f, 0.f }, { 0.f, -1.f, 0.f });
 
+				// Calculate view matrix
+				view = glm::rotate(glm::mat4{ 1.0f }, glm::radians(camRot), glm::vec3(0, 1, 0)) * glm::lookAt(camPos, { 0.f, 0.f, 0.f }, { 0.f, 1.f, 0.f });
+
+				// Calculate projection matrix
+				projection = glm::perspective(45.f, (float)window.GetWidth() / (float)window.GetHeight(), -1.f, 1.f);
+
+				// Render different cubes
 				// Animated cube
 				{
 					// model rotation

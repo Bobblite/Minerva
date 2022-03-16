@@ -1,7 +1,8 @@
 namespace Minerva::Vulkan
 {
     Renderpass::Renderpass(std::shared_ptr<Minerva::Vulkan::Device> _device, std::shared_ptr<Minerva::Vulkan::Window> _window, float* _clearColor) :
-        m_VKDeviceHandle{ _device }, m_VKWindowHandle{ _window }, m_VKClearValue{ {_clearColor[0], _clearColor[1], _clearColor[2], _clearColor[3]}}
+        m_VKDeviceHandle{ _device }, m_VKWindowHandle{ _window }, m_VKClearValue{ {_clearColor[0], _clearColor[1], _clearColor[2], _clearColor[3]} },
+        m_VKFramebufferExtent{ _window->GetVKSwapExtent() }
 	{
         // CREATE RENDERPASS
         // Describe the color attachment
@@ -74,8 +75,8 @@ namespace Minerva::Vulkan
                 .renderPass = m_VKRenderPass,
                 .attachmentCount = 1,
                 .pAttachments = attachments,
-                .width = m_VKWindowHandle->GetVKSwapExtent().width,
-                .height = m_VKWindowHandle->GetVKSwapExtent().height,
+                .width = m_VKFramebufferExtent.width,
+                .height = m_VKFramebufferExtent.height,
                 .layers = 1
             };
 
@@ -114,6 +115,8 @@ namespace Minerva::Vulkan
 
     void Renderpass::RecreateRenderpass()
     {
+        m_VKFramebufferExtent = m_VKWindowHandle->GetVKSwapExtent();
+
         // CREATE RENDERPASS
         // Describe the color attachment
         VkAttachmentDescription colorAttachmentDescription{
@@ -185,8 +188,8 @@ namespace Minerva::Vulkan
                 .renderPass = m_VKRenderPass,
                 .attachmentCount = 1,
                 .pAttachments = attachments,
-                .width = m_VKWindowHandle->GetVKSwapExtent().width,
-                .height = m_VKWindowHandle->GetVKSwapExtent().height,
+                .width = m_VKFramebufferExtent.width,
+                .height = m_VKFramebufferExtent.height,
                 .layers = 1
             };
 

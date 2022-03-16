@@ -11,6 +11,7 @@ namespace Minerva::Vulkan
 		inline VkRenderPass GetVKRenderPass() const { return m_VKRenderPass; }
 		inline VkClearValue GetVkClearValue() const { return m_VKClearValue; }
 		inline std::vector<VkFramebuffer>& GetVKFramebuffers() { return m_VKFramebuffers; }
+		inline const VkExtent2D& GetFramebufferExtent() const { return m_VKFramebufferExtent; }
 
 		void CleanupRenderpass();
 		void RecreateRenderpass();
@@ -24,6 +25,7 @@ namespace Minerva::Vulkan
 		VkRenderPass m_VKRenderPass;
 		std::vector<VkFramebuffer> m_VKFramebuffers;
 		VkClearValue m_VKClearValue;
+		VkExtent2D m_VKFramebufferExtent;
 		
 	};
 }

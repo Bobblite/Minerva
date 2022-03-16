@@ -58,15 +58,16 @@ namespace Minerva
         RenderStatus retval{ m_VKWindowHandle->BeginRender(_pipeline.GetVKPipelineHandle()->GetVKRenderpassHandle())};
         if (retval == RenderStatus::WINDOW_RESIZED) // Deal with resize
         {
+            std::cout << "Resize\n";
             vkDeviceWaitIdle(m_VKWindowHandle->GetDeviceHandle()->GetVKDevice());
 
             _pipeline.GetVKPipelineHandle()->GetVKRenderpassHandle()->CleanupRenderpass();
-            _pipeline.GetVKPipelineHandle()->CleanupPipeline();
+            //_pipeline.GetVKPipelineHandle()->CleanupPipeline();
             m_VKWindowHandle->CleanupSwapchain();
 
             m_VKWindowHandle->RecreateSwapchain();
             _pipeline.GetVKPipelineHandle()->GetVKRenderpassHandle()->RecreateRenderpass();
-            _pipeline.GetVKPipelineHandle()->RecreatePipeline();
+            //_pipeline.GetVKPipelineHandle()->RecreatePipeline();
             return true;
         }
         else if (retval == RenderStatus::WINDOW_MINIMIZED)
@@ -81,12 +82,12 @@ namespace Minerva
         if (retval == RenderStatus::WINDOW_RESIZED) // Deal with resize
         {
             _pipeline.GetVKPipelineHandle()->GetVKRenderpassHandle()->CleanupRenderpass();
-            _pipeline.GetVKPipelineHandle()->CleanupPipeline();
+           // _pipeline.GetVKPipelineHandle()->CleanupPipeline();
             m_VKWindowHandle->CleanupSwapchain();
 
             m_VKWindowHandle->RecreateSwapchain();
             _pipeline.GetVKPipelineHandle()->GetVKRenderpassHandle()->RecreateRenderpass();
-            _pipeline.GetVKPipelineHandle()->RecreatePipeline();
+            //_pipeline.GetVKPipelineHandle()->RecreatePipeline();
         }
     }
 }
