@@ -51,6 +51,8 @@ int main(int argc, const char* argv[])
 		{
 			// Initialize Input Manager
 			Minerva::Input::Initialize();
+
+
 			// Create Instance
 			Minerva::Instance instance("Homework 2", 0, true, true, LogWarn, LogError);
 
@@ -89,6 +91,7 @@ int main(int argc, const char* argv[])
 			// Setup Pipeline
 			Minerva::Pipeline pipeline(device, window, renderpass, shaders.data(), shaders.size(), vertexDescriptor);
 
+			// Vertices and Indices raw data
 			const std::vector<Vertex> vertices{
 				// front
 				{ {-0.5f, -0.5f,  0.5f}, {1.f, 0.f, 0.f} },
@@ -151,11 +154,14 @@ int main(int argc, const char* argv[])
 			//Define Projection matrix
 			glm::mat4 projection;
 			
-			
-			
 			// Setup push constant
 			PushConstant constants;
 			float rotationVal = 0.f;
+
+			// Mouse rotate static mesh variables
+			std::array<int, 2> startRotationPos;
+			glm::vec3 rotationStaticVal{0.f};
+			glm::mat4 rotationStaticMat(1.f);
 
 			// Render loop
 			while (window.ProcessInput())
@@ -171,41 +177,63 @@ int main(int argc, const char* argv[])
 				cmdBuffer.BindBuffer(indexBuffer);
 
 				// "Logic"
-				if (Minerva::Input::IsPressed(Minerva::Keycode::KEY_Q))
+
+				if (Minerva::Input::IsPressed('Q'))
 				{
-					camRot = camRot + 2.f > 360.f ? 0.f : camRot + 2.f; // Reset rotation
+					camRot += 0.5f;
 				}
 
-				if (Minerva::Input::IsPressed(Minerva::Keycode::KEY_E))
+				if (Minerva::Input::IsPressed('E'))
 				{
-					camRot = camRot - 2.f < 0.f ? 360.f : camRot - 2.f; // Reset rotation
+					camRot -= 0.5f;
 				}
 
-				if (Minerva::Input::IsPressed(Minerva::Keycode::KEY_A))
+				if (Minerva::Input::IsPressed('A'))
 				{
-					camPos.x -= 0.5f;
+					camPos.x -= 0.25f;
 				}
 
-				if (Minerva::Input::IsPressed(Minerva::Keycode::KEY_D))
+				if (Minerva::Input::IsPressed('D'))
 				{
-					camPos.x += 0.5f;
+					camPos.x += 0.25f;
 				}
 
-				if (Minerva::Input::IsPressed(Minerva::Keycode::KEY_W))
+				if (Minerva::Input::IsPressed('W'))
 				{
-					camPos.z += 0.5f;
+					camPos.z += 0.25f;
 				}
 
-				if (Minerva::Input::IsPressed(Minerva::Keycode::KEY_S))
+				if (Minerva::Input::IsPressed('S'))
 				{
-					camPos.z -= 0.5f;
+					camPos.z -= 0.25f;
 				}
+
+				if (Minerva::Input::IsTriggered(Minerva::Keycode::MOUSE_LEFT))
+				{
+					startRotationPos = Minerva::Input::GetMousePosition();
+				}
+
+				if (Minerva::Input::IsPressed(Minerva::Keycode::MOUSE_LEFT))
+				{
+					rotationStaticVal.x = -(Minerva::Input::GetMousePosition()[0] - startRotationPos[0]);
+					rotationStaticVal.y =  -(Minerva::Input::GetMousePosition()[1] - startRotationPos[1]);
+
+					glm::mat4 xRotMat(1.f);
+					glm::mat4 yRotMat(1.f);
+					xRotMat = glm::rotate(glm::mat4{1.f}, glm::radians(rotationStaticVal.x), glm::vec3{ 0.f, 1.f, 0.f });
+					yRotMat = glm::rotate(glm::mat4{1.f}, glm::radians(rotationStaticVal.y), glm::vec3{ 1.f, 0.f, 0.f });
+
+					rotationStaticMat = yRotMat * xRotMat;
+				}
+
+
+
 
 				// Calculate view matrix
-				view = glm::rotate(glm::mat4{ 1.0f }, glm::radians(camRot), glm::vec3(0, 1, 0)) * glm::lookAt(camPos, { 0.f, 0.f, 0.f }, { 0.f, 1.f, 0.f });
+				view = glm::rotate(glm::mat4{ 1.0f }, glm::radians(camRot), glm::vec3(0, 1, 0)) * glm::lookAt(camPos, { 0.f, 0.f, camPos.z+50.f }, { 0.f, 1.f, 0.f });
 
 				// Calculate projection matrix
-				projection = glm::perspective(45.f, (float)window.GetWidth() / (float)window.GetHeight(), -1.f, 1.f);
+				projection = glm::perspective(45.f, (float)window.GetWidth() / (float)window.GetHeight(), -1.5f, 1.5f);
 
 				// Render different cubes
 				// Animated cube
@@ -222,7 +250,7 @@ int main(int argc, const char* argv[])
 
 				// Static cube
 				{
-					glm::mat4 model = glm::translate(glm::mat4(1.f), { 1.f, 0.f, 0.f });
+					glm::mat4 model = glm::translate(glm::mat4(1.f), { 1.f, 0.f, 0.f }) * rotationStaticMat;
 					constants.MVP = projection * view * model;
 					cmdBuffer.PushConstant(pipeline, Minerva::Shader::Type::VERTEX, 0, sizeof(PushConstant), &constants);
 					cmdBuffer.DrawIndexed(static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);

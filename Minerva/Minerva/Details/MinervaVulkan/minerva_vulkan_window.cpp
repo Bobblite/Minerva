@@ -293,13 +293,18 @@ namespace Minerva::Vulkan
         switch (message)
         {
         case WM_DESTROY:
+        {
             DestroyWindow(hWnd);
             PostQuitMessage(0);
-            break;
+        }
+        break;
         case WM_PAINT:
+        {
             ValidateRect(hWnd, NULL);
-            break;
+        }
+        break;
         case WM_SIZE:
+        {
             if (auto pWin = reinterpret_cast<Minerva::Vulkan::Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA)); pWin)
             {
                 if (wParam != SIZE_MINIMIZED)
@@ -313,13 +318,19 @@ namespace Minerva::Vulkan
                     pWin->SetMinimized(true);
                 }
             }
-            break;
-        case WM_KEYDOWN:
-            Minerva::Input::UpdateKeystate(static_cast<Keycode>(wParam), Keystate::KEY_DOWN);
-            break;
+        }
+        break;
+
         case WM_KEYUP:
-            Minerva::Input::UpdateKeystate(static_cast<Keycode>(wParam), Keystate::KEY_UP);
-            break;
+        {
+            Minerva::Input::UpdateKeyUpCallback(static_cast<Minerva::Keycode>(wParam));
+        }
+        break;
+        case WM_MOUSEMOVE:
+        {
+            Minerva::Input::UpdateMousePositionCallback(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        }
+        break;
         }
         
 

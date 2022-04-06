@@ -1,30 +1,93 @@
 namespace Minerva::Vulkan
 {
-	Input::Input() :
-		m_PrevState{ Keystate::KEY_UP }, m_CurrState{ Keystate::KEY_UP } {}
-
-	void Input::UpdateKeystate(Minerva::Keycode _code, Minerva::Keystate _state)
+	Input::Input()
 	{
-		m_PrevState[static_cast<uint32_t>(_code)] = m_CurrState[static_cast<uint32_t>(_code)];
-		m_CurrState[static_cast<uint32_t>(_code)] = _state;
+		// Initialize keystates with the initial states when application starts
+		for (int i{ 0 }; i < m_PrevKeystates.size(); ++i)
+			m_PrevKeystates[i] = IsPressed(i);
 	}
 
-	bool Input::IsTriggered(Minerva::Keycode _code)
+	void Input::UpdateMousePositionCB(int _x, int _y)
 	{
-		if (m_CurrState[static_cast<uint32_t>(_code)] == Minerva::Keystate::KEY_DOWN)
-			return true;
-		else
-			return false;
+		m_MousePosition[0] = _x;
+		m_MousePosition[1] = _y;
 	}
 
-	bool Input::IsPressed(Minerva::Keycode _code)
+	void Input::UpdateKeyUpCB(Minerva::Keycode _keycode)
 	{
-		if (m_CurrState[static_cast<uint32_t>(_code)] == Minerva::Keystate::KEY_DOWN)
+		m_PrevKeystates[static_cast<int>(_keycode)] = false;
+	}
+
+	bool Input::IsTriggered(char _key)
+	{
+		int keycode = CharToVK(_key);
+
+		bool prevState{ m_PrevKeystates[keycode] };
+		bool currState{ IsPressed(_key) };
+		if (currState && !prevState)
 		{
-			//UpdateKeystate(_code, Keystate::KEY_UP);
-			return true;
+			m_PrevKeystates[keycode] = currState;
 		}
-		return false;
+
+		return currState && !prevState;
+	}
+
+	bool Input::IsTriggered(Minerva::Keycode _key)
+	{
+		bool prevState{ m_PrevKeystates[static_cast<int>(_key)]};
+		bool currState{ IsPressed(_key) };
+
+		//if (currState && !prevState)
+		//{
+			m_PrevKeystates[static_cast<int>(_key)] = currState;
+		//}
+
+		return (currState && !prevState);
+	}
+
+	bool Input::IsReleased(char _key)
+	{
+		int keycode = CharToVK(_key);
+		bool prevState{ m_PrevKeystates[keycode] };
+		bool currState{ IsPressed(_key) };
+
+		if (!currState && prevState)
+			m_PrevKeystates[keycode] = currState;
+
+		return (!currState && prevState);
+	}
+
+	bool Input::IsReleased(Minerva::Keycode _key)
+	{
+		bool prevState{ m_PrevKeystates[static_cast<int>(_key)] };
+		bool currState{ IsPressed(_key) };
+
+		//if (!currState && prevState)
+			m_PrevKeystates[static_cast<int>(_key)] = currState;
+
+		return (!currState && prevState);
+	}
+
+	bool Input::IsPressed(char _key)
+	{
+		int keycode = CharToVK(_key);
+		return (1 << 15) & GetAsyncKeyState(keycode);
+	}
+
+	bool Input::IsPressed(Minerva::Keycode _key)
+	{
+		return (1 << 15) & GetAsyncKeyState(static_cast<int>(_key));
+	}
+
+	const std::array<int, 2>& Input::GetMousePosition() const
+	{
+		return m_MousePosition;
+	}
+
+
+	int Input::CharToVK(char _key)
+	{
+		return (_key >= 'a' && _key <= 'z') ? _key - 'a' + 'A' : _key; // Convert to uppercase
 	}
 
 }

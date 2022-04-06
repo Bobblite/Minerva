@@ -24,11 +24,13 @@
 
 //! Windows API
 #include <Windows.h>
+#include <windowsx.h>
 #include <wincon.h>
 
 //! GLM
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 //! Forward declaration of private interface
 namespace Minerva::Vulkan

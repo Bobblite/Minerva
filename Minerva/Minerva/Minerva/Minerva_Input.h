@@ -4,9 +4,9 @@ namespace Minerva
 {
 	enum class Keycode
 	{
-		MOUSE_LEFT = 0x01,
-		MOUSE_RIGHT = 0x02,
-		MOUSE_MIDDLE = 0x04,
+		MOUSE_LEFT = VK_LBUTTON,
+		MOUSE_RIGHT = VK_RBUTTON,
+		MOUSE_MIDDLE = VK_MBUTTON,
 		KEY_LEFT = 0x25,
 		KEY_UP = 0x26,
 		KEY_RIGHT = 0x27,
@@ -60,9 +60,17 @@ namespace Minerva
 	{
 	public:
 		static inline void Initialize();
-		static inline bool IsTriggered(Keycode _code);
-		static inline bool IsPressed(Keycode _code);
-		static inline void UpdateKeystate(Keycode _code, Keystate _state);
+
+		static inline void UpdateMousePositionCallback(int _x, int _y);
+		static inline void UpdateKeyUpCallback(Minerva::Keycode _keycode);
+
+		static inline bool IsTriggered(char _key);
+		static inline bool IsReleased(char _key);
+		static inline bool IsPressed(char _key);
+		static inline bool IsTriggered(Keycode _key);
+		static inline bool IsReleased(Keycode _key);
+		static inline bool IsPressed(Keycode _key);
+		static inline const std::array<int, 2>& GetMousePosition();
 
 		static std::unique_ptr<Minerva::Vulkan::Input> m_VKInputHandle;
 
