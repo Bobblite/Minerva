@@ -2,7 +2,7 @@ namespace Minerva::Vulkan
 {
 	Device::Device(std::shared_ptr<Minerva::Vulkan::Instance> _instance, Minerva::Device::QueueFamily _queueFamily, Minerva::Device::Type _type) :
 		m_VKInstanceHandle{ _instance }, m_VKPhysicalDevice{ VK_NULL_HANDLE }, m_VKDevice{ VK_NULL_HANDLE }, m_VKCommandPool{VK_NULL_HANDLE},
-		m_VKMainQueue{ VK_NULL_HANDLE }, m_MainQueueIndex{ 0xffffffff },
+		m_VKDescriptorPool{ VK_NULL_HANDLE }, m_VKDescriptorPoolSizes{}, m_VKMainQueue{ VK_NULL_HANDLE }, m_MainQueueIndex{ 0xffffffff },
 		m_QueueFamily{ _queueFamily }, m_Type{ _type }
 	{
 		if (_instance->GetVkInstance() == VK_NULL_HANDLE)
@@ -163,13 +163,38 @@ namespace Minerva::Vulkan
 
 		if (auto VkErr{ vkCreateCommandPool(m_VKDevice, &commandPoolCreateInfo, nullptr, &m_VKCommandPool) }; VkErr)
 		{
-			Logger::Log_Error("Unable to create Command Pool. vkCreateCommandPool failed.");
-			throw std::runtime_error("Unable to create Command Pool. vkCreateCommandPool failed.");
+			Logger::Log_Error("Failed to create device. Unable to create Command Pool.");
+			throw std::runtime_error("Failed to create device. Unable to create Command Pool.");
 		}
+
+		// Create Descriptor Pool for Descriptor Sets allocation
+		m_VKDescriptorPoolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		m_VKDescriptorPoolSizes[0].descriptorCount = 100;
+		m_VKDescriptorPoolSizes[1].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		m_VKDescriptorPoolSizes[1].descriptorCount = 100;
+
+		VkDescriptorPoolCreateInfo descriptorPoolInfo{
+			.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO,
+			.pNext = nullptr,
+			.flags = 0,
+			.maxSets = 10,
+			.poolSizeCount = static_cast<uint32_t>(m_VKDescriptorPoolSizes.size()),
+			.pPoolSizes = m_VKDescriptorPoolSizes.data()
+		};
+
+		if (int vkErr{ vkCreateDescriptorPool(m_VKDevice, &descriptorPoolInfo, nullptr, &m_VKDescriptorPool) }; vkErr)
+		{
+			Logger::Log_Error("Failed to create device. Unable to create Descriptor Pool.");
+			throw std::runtime_error("Failed to create device. Unable to create Descriptor Pool.");
+		}
+
 	}
 
 	Device::~Device()
 	{
+		if (m_VKDescriptorPool != VK_NULL_HANDLE)
+			vkDestroyDescriptorPool(m_VKDevice, m_VKDescriptorPool, nullptr);
+
 		if (m_VKCommandPool != VK_NULL_HANDLE)
 			vkDestroyCommandPool(m_VKDevice, m_VKCommandPool, nullptr);
 

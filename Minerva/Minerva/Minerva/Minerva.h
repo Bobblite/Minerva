@@ -42,6 +42,7 @@ namespace Minerva::Vulkan
 	class Renderpass;
 	class Shader;
 	class VertexDescriptor;
+	class DescriptorSet;
 	class Pipeline;
 	class Buffer;
 	class CommandBuffer;
@@ -55,6 +56,7 @@ namespace Minerva::Vulkan
 #include "Minerva_Renderpass.h"
 #include "Minerva_Shader.h"
 #include "Minerva_Vertex_Descriptor.h"
+#include "Minerva_DescriptorSet.h"
 #include "Minerva_Pipeline.h"
 #include "Minerva_Buffer.h"
 #include "Minerva_CmdBuffer.h"
@@ -70,6 +72,7 @@ namespace Minerva::Vulkan
 #include "../Details/Minerva_Renderpass_Inline.h"
 #include "../Details/Minerva_Shader_Inline.h"
 #include "../Details/Minerva_Vertex_Descriptor_Inline.h"
+#include "../Details/Minerva_DescriptorSet_Inline.h"
 #include "../Details/Minerva_Pipeline_Inline.h"
 #include "../Details/Minerva_Buffer_Inline.h"
 #include "../Details/Minerva_CmdBuffer_Inline.h"

@@ -13,6 +13,7 @@ namespace Minerva::Vulkan
 		inline std::shared_ptr<Minerva::Vulkan::Instance> GetVKInstanceHandle() const { return m_VKInstanceHandle; }
 		inline VkPhysicalDevice GetVKPhysicalDevice() const { return m_VKPhysicalDevice; }
 		inline VkDevice GetVKDevice() const { return m_VKDevice; }
+		inline VkDescriptorPool GetVKDescriptorPool() const { return m_VKDescriptorPool; }
 		inline VkQueue GetMainQueue() const { return m_VKMainQueue; }
 		inline uint32_t GetMainQueueIndex() const { return m_MainQueueIndex; }
 		inline Minerva::Device::QueueFamily GetQueueFamily() const { return m_QueueFamily; }
@@ -25,6 +26,8 @@ namespace Minerva::Vulkan
 		VkPhysicalDevice m_VKPhysicalDevice;
 		VkDevice m_VKDevice;
 		VkCommandPool m_VKCommandPool;
+		VkDescriptorPool m_VKDescriptorPool;
+		std::array<VkDescriptorPoolSize, 2> m_VKDescriptorPoolSizes;
 
 		// Queue properties
 		VkQueue m_VKMainQueue;
