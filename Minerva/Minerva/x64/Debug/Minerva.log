@@ -1,17 +1,18 @@
 ﻿  Main.cpp
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_instance.cpp(12,47): warning C4100: 'location': unreferenced formal parameter
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_instance.cpp(11,47): warning C4100: 'object': unreferenced formal parameter
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_instance.cpp(10,47): warning C4100: 'objectType': unreferenced formal parameter
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_instance.cpp(76,48): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_instance.cpp(88,56): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_device.cpp(208,80): warning C4100: '_deviceProperties': unreferenced formal parameter
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_input.cpp(7,35): warning C4244: 'argument': conversion from 'int' to 'char', possible loss of data
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_vertex_descriptor.cpp(3,156): warning C4100: '_topology': unreferenced formal parameter
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_vertex_descriptor.cpp(3,107): warning C4100: '_vertexSize': unreferenced formal parameter
-D:\GitHub\Minerva\Minerva\Minerva\Main.cpp(111,106): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\GitHub\Minerva\Minerva\Minerva\Main.cpp(164,120): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
-D:\GitHub\Minerva\Minerva\Minerva\Main.cpp(165,118): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
-D:\GitHub\Minerva\Minerva\Minerva\Main.cpp(252,27): warning C4244: '=': conversion from '_Ty' to 'T', possible loss of data
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_instance.cpp(12,47): warning C4100: 'location': unreferenced formal parameter
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_instance.cpp(11,47): warning C4100: 'object': unreferenced formal parameter
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_instance.cpp(10,47): warning C4100: 'objectType': unreferenced formal parameter
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_instance.cpp(76,48): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_instance.cpp(88,56): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_device.cpp(208,80): warning C4100: '_deviceProperties': unreferenced formal parameter
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_input.cpp(7,35): warning C4244: 'argument': conversion from 'int' to 'char', possible loss of data
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_vertex_descriptor.cpp(3,156): warning C4100: '_topology': unreferenced formal parameter
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_vertex_descriptor.cpp(3,107): warning C4100: '_vertexSize': unreferenced formal parameter
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_texture.cpp(3,86): warning C4100: '_filePath': unreferenced formal parameter
+E:\GitHub\Minerva\Minerva\Minerva\Main.cpp(112,106): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+E:\GitHub\Minerva\Minerva\Minerva\Main.cpp(169,120): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+E:\GitHub\Minerva\Minerva\Minerva\Main.cpp(170,118): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+E:\GitHub\Minerva\Minerva\Minerva\Main.cpp(258,27): warning C4244: '=': conversion from '_Ty' to 'T', possible loss of data
           with
           [
               _Ty=int
@@ -20,7 +21,7 @@ D:\GitHub\Minerva\Minerva\Minerva\Main.cpp(252,27): warning C4244: '=': conversi
           [
               T=float
           ]
-D:\GitHub\Minerva\Minerva\Minerva\Main.cpp(253,28): warning C4244: '=': conversion from '_Ty' to 'T', possible loss of data
+E:\GitHub\Minerva\Minerva\Minerva\Main.cpp(259,28): warning C4244: '=': conversion from '_Ty' to 'T', possible loss of data
           with
           [
               _Ty=int
@@ -29,16 +30,16 @@ D:\GitHub\Minerva\Minerva\Minerva\Main.cpp(253,28): warning C4244: '=': conversi
           [
               T=float
           ]
-D:\GitHub\Minerva\Minerva\Minerva\Main.cpp(46,32): warning C4100: 'argv': unreferenced formal parameter
-D:\GitHub\Minerva\Minerva\Minerva\Main.cpp(46,14): warning C4100: 'argc': unreferenced formal parameter
-D:\GitHub\Minerva\Minerva\vendor\glm\glm\ext\matrix_transform.inl(147,1): warning C4305: 'if': truncation from 'int' to 'bool'
-D:\GitHub\Minerva\Minerva\Minerva\Main.cpp(267): message : see reference to function template instantiation 'glm::mat<4,4,glm::f32,glm::packed_highp> glm::lookAt<float,glm::packed_highp>(const glm::vec<3,float,glm::packed_highp> &,const glm::vec<3,float,glm::packed_highp> &,const glm::vec<3,float,glm::packed_highp> &)' being compiled
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_buffer.cpp(16): warning C4715: '`Minerva::Vulkan::Buffer::Buffer'::`2'::<lambda_1>::operator()<enum Minerva::Buffer::Type>': not all control paths return a value
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_buffer.cpp(28): warning C4715: '`Minerva::Vulkan::Buffer::Buffer'::`2'::<lambda_2>::operator()<enum Minerva::Buffer::Type>': not all control paths return a value
-D:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_cmdbuffer.cpp(100): warning C4715: '`Minerva::Vulkan::CommandBuffer::PushConstant'::`2'::<lambda_1>::operator()<enum Minerva::Shader::Type>': not all control paths return a value
-D:\GitHub\Minerva\Minerva\Minerva\Details\Minerva_Input_Inline.h(50): warning C4715: 'Minerva::Input::IsTriggered': not all control paths return a value
-D:\GitHub\Minerva\Minerva\Minerva\Details\Minerva_Input_Inline.h(63): warning C4715: 'Minerva::Input::IsPressed': not all control paths return a value
-D:\GitHub\Minerva\Minerva\Minerva\Details\Minerva_Input_Inline.h(69): warning C4715: 'Minerva::Input::GetMousePosition': not all control paths return a value
-D:\GitHub\Minerva\Minerva\Minerva\Details\Minerva_Input_Inline.h(43): warning C4715: 'Minerva::Input::IsPressed': not all control paths return a value
-D:\GitHub\Minerva\Minerva\Minerva\Details\Minerva_Window_Inline.h(77): warning C4715: 'Minerva::Window::BeginRender': not all control paths return a value
-  Minerva.vcxproj -> D:\GitHub\Minerva\Minerva\x64\Debug\Minerva.exe
+E:\GitHub\Minerva\Minerva\Minerva\Main.cpp(46,32): warning C4100: 'argv': unreferenced formal parameter
+E:\GitHub\Minerva\Minerva\Minerva\Main.cpp(46,14): warning C4100: 'argc': unreferenced formal parameter
+E:\GitHub\Minerva\Minerva\vendor\glm\glm\ext\matrix_transform.inl(147,1): warning C4305: 'if': truncation from 'int' to 'bool'
+E:\GitHub\Minerva\Minerva\Minerva\Main.cpp(273): message : see reference to function template instantiation 'glm::mat<4,4,glm::f32,glm::packed_highp> glm::lookAt<float,glm::packed_highp>(const glm::vec<3,float,glm::packed_highp> &,const glm::vec<3,float,glm::packed_highp> &,const glm::vec<3,float,glm::packed_highp> &)' being compiled
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_buffer.cpp(16): warning C4715: '`Minerva::Vulkan::Buffer::Buffer'::`2'::<lambda_1>::operator()<enum Minerva::Buffer::Type>': not all control paths return a value
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_buffer.cpp(28): warning C4715: '`Minerva::Vulkan::Buffer::Buffer'::`2'::<lambda_2>::operator()<enum Minerva::Buffer::Type>': not all control paths return a value
+E:\GitHub\Minerva\Minerva\Minerva\Details\MinervaVulkan\minerva_vulkan_cmdbuffer.cpp(100): warning C4715: '`Minerva::Vulkan::CommandBuffer::PushConstant'::`2'::<lambda_1>::operator()<enum Minerva::Shader::Type>': not all control paths return a value
+E:\GitHub\Minerva\Minerva\Minerva\Details\Minerva_Input_Inline.h(50): warning C4715: 'Minerva::Input::IsTriggered': not all control paths return a value
+E:\GitHub\Minerva\Minerva\Minerva\Details\Minerva_Input_Inline.h(63): warning C4715: 'Minerva::Input::IsPressed': not all control paths return a value
+E:\GitHub\Minerva\Minerva\Minerva\Details\Minerva_Input_Inline.h(43): warning C4715: 'Minerva::Input::IsPressed': not all control paths return a value
+E:\GitHub\Minerva\Minerva\Minerva\Details\Minerva_Input_Inline.h(69): warning C4715: 'Minerva::Input::GetMousePosition': not all control paths return a value
+E:\GitHub\Minerva\Minerva\Minerva\Details\Minerva_Window_Inline.h(77): warning C4715: 'Minerva::Window::BeginRender': not all control paths return a value
+  Minerva.vcxproj -> E:\GitHub\Minerva\Minerva\x64\Debug\Minerva.exe

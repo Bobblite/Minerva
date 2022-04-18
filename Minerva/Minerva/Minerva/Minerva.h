@@ -32,6 +32,9 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+//! TinyDDSLoader
+#include <tinyddsloader.h>
+
 //! Forward declaration of private interface
 namespace Minerva::Vulkan
 {
@@ -42,6 +45,7 @@ namespace Minerva::Vulkan
 	class Renderpass;
 	class Shader;
 	class VertexDescriptor;
+	class Texture;
 	class DescriptorSet;
 	class Pipeline;
 	class Buffer;
@@ -56,6 +60,7 @@ namespace Minerva::Vulkan
 #include "Minerva_Renderpass.h"
 #include "Minerva_Shader.h"
 #include "Minerva_Vertex_Descriptor.h"
+#include "Minerva_Texture.h"
 #include "Minerva_DescriptorSet.h"
 #include "Minerva_Pipeline.h"
 #include "Minerva_Buffer.h"
@@ -72,6 +77,7 @@ namespace Minerva::Vulkan
 #include "../Details/Minerva_Renderpass_Inline.h"
 #include "../Details/Minerva_Shader_Inline.h"
 #include "../Details/Minerva_Vertex_Descriptor_Inline.h"
+#include "../Details/Minerva_Texture_Inline.h"
 #include "../Details/Minerva_DescriptorSet_Inline.h"
 #include "../Details/Minerva_Pipeline_Inline.h"
 #include "../Details/Minerva_Buffer_Inline.h"

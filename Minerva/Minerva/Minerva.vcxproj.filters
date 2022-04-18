@@ -155,5 +155,8 @@
     <ClInclude Include="Minerva\Minerva_Input_Inline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Minerva\Minerva_Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
