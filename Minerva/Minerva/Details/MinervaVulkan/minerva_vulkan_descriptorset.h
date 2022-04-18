@@ -8,7 +8,10 @@ namespace Minerva::Vulkan
 		DescriptorSet(std::shared_ptr<Minerva::Vulkan::Device> _device, std::span<Minerva::DescriptorSet::Layout> _layouts);
 		~DescriptorSet();
 
-		//todo Update(const Layout& _layout, void* _data, uint32_t _size);
+		inline VkDescriptorSetLayout GetVKDescriptorSetLayout() const { return m_VKDescriptorSetLayout; }
+		inline VkDescriptorSet GetVKDescriptorSet() const { return m_VKDescriptorSet; }
+		
+		void Update(const Minerva::DescriptorSet::Layout& _layout, std::span<std::shared_ptr<Minerva::Vulkan::Texture>> _textures);
 
 	private:
 		std::shared_ptr<Minerva::Vulkan::Device> m_VKDeviceHandle;

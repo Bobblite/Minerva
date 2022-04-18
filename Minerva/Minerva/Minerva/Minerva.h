@@ -33,7 +33,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 //! TinyDDSLoader
+#define TINYDDSLOADER_IMPLEMENTATION
 #include <tinyddsloader.h>
+
+//! In-house DDS Loader
+#include <Minerva_DDSLoader.h>
+
 
 //! Forward declaration of private interface
 namespace Minerva::Vulkan

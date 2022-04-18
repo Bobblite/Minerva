@@ -32,7 +32,9 @@ namespace Minerva
 		DescriptorSet(Minerva::Device &_device, std::span<Minerva::DescriptorSet::Layout> _layouts);
 		~DescriptorSet();
 
-		//todo void Update(const Layout& _layout, void* _data, uint32_t _size);
+		inline std::shared_ptr<Minerva::Vulkan::DescriptorSet> GetVKDescriptorSetHandle() const;
+
+		inline void Update(const Layout& _layout, std::span<Minerva::Texture> _textures);
 
 	private:
 		std::shared_ptr<Minerva::Vulkan::DescriptorSet> m_VKDescriptorSetHandle;

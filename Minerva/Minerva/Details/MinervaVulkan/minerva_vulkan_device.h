@@ -9,6 +9,8 @@ namespace Minerva::Vulkan
 		~Device();
 
 		void CopyBuffer(VkBuffer _src, VkBuffer _dst, VkDeviceSize _size);
+		VkCommandBuffer BeginSingleTimeCommands();
+		void EndSingleTimeCommands(VkCommandBuffer _cmdBuffer);
 
 		inline std::shared_ptr<Minerva::Vulkan::Instance> GetVKInstanceHandle() const { return m_VKInstanceHandle; }
 		inline VkPhysicalDevice GetVKPhysicalDevice() const { return m_VKPhysicalDevice; }

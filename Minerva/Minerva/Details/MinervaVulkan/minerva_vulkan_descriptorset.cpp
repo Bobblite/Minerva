@@ -76,4 +76,30 @@ namespace Minerva::Vulkan
 		if (m_VKDescriptorSetLayout != VK_NULL_HANDLE)
 			vkDestroyDescriptorSetLayout(m_VKDeviceHandle->GetVKDevice(), m_VKDescriptorSetLayout, nullptr);
 	}
+
+	void DescriptorSet::Update(const Minerva::DescriptorSet::Layout& _layout, std::span<std::shared_ptr<Minerva::Vulkan::Texture>> _textures)
+	{
+		//! Create VkDescriptorImageInfos for each Texture in the layout
+		std::vector<VkDescriptorImageInfo> imageInfos(_layout.m_DescriptorCount);
+
+		for (int i{ 0 }; i < _layout.m_DescriptorCount; ++i)
+		{
+			imageInfos[i].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+			imageInfos[i].imageView = _textures[i]->GetVKImageView();
+			imageInfos[i].sampler = _textures[i]->GetVKSampler();
+		}
+
+		//! DescriptorWrite information
+		VkWriteDescriptorSet descriptorWrite{};
+		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		descriptorWrite.dstSet = m_VKDescriptorSet;
+		descriptorWrite.dstBinding = _layout.m_BindingPoint;
+		descriptorWrite.dstArrayElement = 0;
+		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorWrite.descriptorCount = imageInfos.size();
+		descriptorWrite.pImageInfo = imageInfos.data();
+
+		//! Write into descriptor set
+		vkUpdateDescriptorSets(m_VKDeviceHandle->GetVKDevice(), 1, &descriptorWrite, 0, nullptr);
+	}
 }

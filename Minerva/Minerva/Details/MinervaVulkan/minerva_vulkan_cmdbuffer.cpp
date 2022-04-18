@@ -55,6 +55,20 @@ namespace Minerva::Vulkan
 
 	}
 
+	void CommandBuffer::BindDescriptorSet(std::shared_ptr<Minerva::Vulkan::Pipeline> _pipeline, std::shared_ptr<Minerva::Vulkan::DescriptorSet> _descriptorSet)
+	{
+		VkDescriptorSet tmpDescSet{ _descriptorSet->GetVKDescriptorSet() };
+
+		vkCmdBindDescriptorSets(m_VKCommandBuffer,
+			VK_PIPELINE_BIND_POINT_GRAPHICS,
+			_pipeline->GetVKPipelineLayout(),
+			0,
+			1,
+			&tmpDescSet,
+			0,
+			nullptr);
+	}
+
 	void CommandBuffer::Draw(int _vertexCount, int _instanceCount, int _firstIndex, int _firstInstance)
 	{
 		vkCmdDraw(m_VKCommandBuffer, _vertexCount, _instanceCount, _firstIndex, _firstInstance);

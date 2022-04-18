@@ -13,9 +13,14 @@ namespace Minerva
 		m_VKCommandBufferHandle->BindGraphicsPipeline(_pipeline.GetVKPipelineHandle());
 	}
 
-	void CommandBuffer::BindBuffer(Minerva::Buffer& _buffer)
+	inline void CommandBuffer::BindBuffer(Minerva::Buffer& _buffer)
 	{
 		m_VKCommandBufferHandle->BindBuffer(_buffer.GetVKBufferHandle());
+	}
+
+	inline void CommandBuffer::BindDescriptorSet(Minerva::Pipeline& _pipeline, Minerva::DescriptorSet& _descriptorSet)
+	{
+		m_VKCommandBufferHandle->BindDescriptorSet(_pipeline.GetVKPipelineHandle(), _descriptorSet.GetVKDescriptorSetHandle());
 	}
 
 	inline void CommandBuffer::Draw(int _vertexCount, int _instanceCount, int _firstIndex, int _firstInstance)

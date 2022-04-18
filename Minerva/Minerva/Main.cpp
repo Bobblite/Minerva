@@ -26,8 +26,9 @@ void LogWarn(const std::string_view _str)
 
 struct Vertex
 {
-	glm::vec3 pos;
-	glm::vec3 color;
+	glm::vec2 pos;
+	glm::vec4 color;
+	glm::vec2 texCoord;
 };
 
 struct UniformBufferObject
@@ -67,16 +68,21 @@ int main(int argc, const char* argv[])
 		Minerva::Renderpass renderpass(device, window, clearColor.data());
 
 		// Setup Attributes
-		std::array<Minerva::VertexDescriptor::Attribute, 2> attributes{
+		std::array<Minerva::VertexDescriptor::Attribute, 3> attributes{
 			Minerva::VertexDescriptor::Attribute // Position
 			{
 				.m_Offset = offsetof(Vertex, pos),
-				.m_Format = Minerva::VertexDescriptor::Format::FLOAT_3D
+				.m_Format = Minerva::VertexDescriptor::Format::FLOAT_2D
 			},
 			Minerva::VertexDescriptor::Attribute // Color
 			{
 				.m_Offset = offsetof(Vertex, color),
-				.m_Format = Minerva::VertexDescriptor::Format::FLOAT_3D
+				.m_Format = Minerva::VertexDescriptor::Format::FLOAT_4D
+			},
+			Minerva::VertexDescriptor::Attribute // Texture Coordinates
+			{
+				.m_Offset = offsetof(Vertex, texCoord),
+				.m_Format = Minerva::VertexDescriptor::Format::FLOAT_2D
 			}
 		};
 		// Create Vertex Descriptor
@@ -93,15 +99,13 @@ int main(int argc, const char* argv[])
 		//! In this case, since samplers are not required to be updated, we can do it this way...
 		std::vector<Minerva::DescriptorSet::Layout> descriptorLayouts{
 			{
-				0, // Binding point
+				1, // Binding point
 				Minerva::DescriptorSet::DescriptorType::COMBINED_IMAGE_SAMPLER, // Descriptor type
 				//todo << DDS requires multiple textures. Will putting into 1 array work? (Talking about the line below) >>
 				1, // Descriptor count -> Can try and add more for multiple textures
 				Minerva::Shader::Type::FRAGMENT // Shader stage
 			}
 		};
-	
-		
 
 		// Create actual descriptor set
 		//! FFI Considerations - If we plan to do this for Frames In Flight, descriptorSets will be stored in Window (kinda weird and ugly tbh), then:
@@ -109,73 +113,83 @@ int main(int argc, const char* argv[])
 		Minerva::DescriptorSet descriptorSet(device, descriptorLayouts);
 
 		// Setup Pipeline
-		Minerva::Pipeline pipeline(device, window, renderpass, shaders.data(), shaders.size(), vertexDescriptor);
-		//todo Change pipeline to take in Descriptor Set Layouts
 		//todo DEPTH BUFFER DONT FORGET PLS
-		//todo Minerva::Pipeline pipeline(device, window, renderpass, shaders.data(), shaders.size(), vertexDescriptor, descriptorLayouts, descriptorLayouts.size());
+		Minerva::Pipeline pipeline(device, window, renderpass, shaders.data(), shaders.size(), descriptorSet, vertexDescriptor);
+
 
 		//todo This to be replaced with model loading
 		//todo Look towards a mesh class
 		// Vertices and Indices raw data
-		const std::vector<Vertex> vertices{
-			// front
-			{ {-0.5f, -0.5f,  0.5f}, {1.f, 0.f, 0.f} },
-			{ {0.5f, -0.5f, 0.5f},	 {0.f, 1.f, 0.f} },
-			{ {0.5f,  0.5f,  0.5f},  {0.f, 0.f, 1.f} },
-			{ {-0.5f,  0.5f,  0.5f}, {1.f, 0.f, 0.f} },
+		//const std::vector<Vertex> vertices{
+		//	// front
+		//	{ {-0.5f, -0.5f,  0.5f}, {1.f, 0.f, 0.f}, },
+		//	{ {0.5f, -0.5f, 0.5f},	 {0.f, 1.f, 0.f} },
+		//	{ {0.5f,  0.5f,  0.5f},  {0.f, 0.f, 1.f} },
+		//	{ {-0.5f,  0.5f,  0.5f}, {1.f, 0.f, 0.f} },
 
-			// back
-			{ {-0.5f, -0.5f, -0.5f}, {1.f, 0.f, 0.f} },
-			{ {-0.5f,  0.5f, -0.5f}, {0.f, 1.f, 0.f} },
-			{ {0.5f,  0.5f, -0.5f},  {0.f, 0.f, 1.f} },
-			{ {0.5f, -0.5f, -0.5f},  {1.f, 0.f, 0.f}},
+		//	// back
+		//	{ {-0.5f, -0.5f, -0.5f}, {1.f, 0.f, 0.f} },
+		//	{ {-0.5f,  0.5f, -0.5f}, {0.f, 1.f, 0.f} },
+		//	{ {0.5f,  0.5f, -0.5f},  {0.f, 0.f, 1.f} },
+		//	{ {0.5f, -0.5f, -0.5f},  {1.f, 0.f, 0.f}},
 
-			// top
-			{ {-0.5f,  0.5f, -0.5f}, {1.f, 0.f, 0.f} },
-			{ {-0.5f,  0.5f,  0.5f}, {0.f, 1.f, 0.f} },
-			{ {0.5f,  0.5f,  0.5f},  {0.f, 0.f, 1.f} },
-			{ {0.5f,  0.5f, -0.5f},  {1.f, 0.f, 0.f} },
+		//	// top
+		//	{ {-0.5f,  0.5f, -0.5f}, {1.f, 0.f, 0.f} },
+		//	{ {-0.5f,  0.5f,  0.5f}, {0.f, 1.f, 0.f} },
+		//	{ {0.5f,  0.5f,  0.5f},  {0.f, 0.f, 1.f} },
+		//	{ {0.5f,  0.5f, -0.5f},  {1.f, 0.f, 0.f} },
 
-			// bottom
-			{ {-0.5f, -0.5f, -0.5f}, {1.f, 0.f, 0.f} },
-			{ {0.5f, -0.5f, -0.5f},  {0.f, 1.f, 0.f} },
-			{ {0.5f, -0.5f,  0.5f},  {0.f, 0.f, 1.f} },
-			{ {-0.5f, -0.5f,  0.5f}, {1.f, 0.f, 0.f} },
+		//	// bottom
+		//	{ {-0.5f, -0.5f, -0.5f}, {1.f, 0.f, 0.f} },
+		//	{ {0.5f, -0.5f, -0.5f},  {0.f, 1.f, 0.f} },
+		//	{ {0.5f, -0.5f,  0.5f},  {0.f, 0.f, 1.f} },
+		//	{ {-0.5f, -0.5f,  0.5f}, {1.f, 0.f, 0.f} },
 
-			// right
-			{ {0.5f, -0.5f, -0.5f}, {1.f, 0.f, 0.f} },
-			{ {0.5f,  0.5f, -0.5f}, {0.f, 1.f, 0.f} },
-			{ {0.5f,  0.5f,  0.5f}, {0.f, 0.f, 1.f} },
-			{ {0.5f, -0.5f,  0.5f}, {1.f, 0.f, 0.f} },
+		//	// right
+		//	{ {0.5f, -0.5f, -0.5f}, {1.f, 0.f, 0.f} },
+		//	{ {0.5f,  0.5f, -0.5f}, {0.f, 1.f, 0.f} },
+		//	{ {0.5f,  0.5f,  0.5f}, {0.f, 0.f, 1.f} },
+		//	{ {0.5f, -0.5f,  0.5f}, {1.f, 0.f, 0.f} },
 
-			// left
-			{ {-0.5f, -0.5f, -0.5f}, {1.f, 0.f, 0.f} },
-			{ {-0.5f, -0.5f,  0.5f}, {0.f, 1.f, 0.f} },
-			{ {-0.5f,  0.5f,  0.5f}, {0.f, 0.f, 1.f} },
-			{ {-0.5f,  0.5f, -0.5f}, {1.f, 0.f, 0.f} }
+		//	// left
+		//	{ {-0.5f, -0.5f, -0.5f}, {1.f, 0.f, 0.f} },
+		//	{ {-0.5f, -0.5f,  0.5f}, {0.f, 1.f, 0.f} },
+		//	{ {-0.5f,  0.5f,  0.5f}, {0.f, 0.f, 1.f} },
+		//	{ {-0.5f,  0.5f, -0.5f}, {1.f, 0.f, 0.f} }
+		//};
+
+		const std::vector<Vertex> vertices = {
+		{{-0.5f, -0.5f}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f}},
+		{{0.5f, -0.5f}, {1.0f, 1.0f, 1.0f, 1.f}, {1.0f, 0.0f}},
+		{{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f, 1.f}, {0.0f, 1.0f}},
+		{{0.5f, 0.5f}, {1.0f, 1.0f, 1.0f, 1.f}, {1.0f, 1.0f}},
 		};
 
-		const std::vector<uint16_t> indices
-		{
-			0,  1,  2,      0,  2,  3,    // front
-			4,  5,  6,      4,  6,  7,    // back
-			8,  9,  10,     8,  10, 11,   // top
-			12, 13, 14,     12, 14, 15,   // bottom
-			16, 17, 18,     16, 18, 19,   // right
-			20, 21, 22,     20, 22, 23    // left
+		const std::vector<uint16_t> indices = {
+			0, 2, 1, 2, 3, 1
 		};
+
+		//const std::vector<uint16_t> indices
+		//{
+		//	0,  1,  2,      0,  2,  3,    // front
+		//	4,  5,  6,      4,  6,  7,    // back
+		//	8,  9,  10,     8,  10, 11,   // top
+		//	12, 13, 14,     12, 14, 15,   // bottom
+		//	16, 17, 18,     16, 18, 19,   // right
+		//	20, 21, 22,     20, 22, 23    // left
+		//};
 
 		// Setup buffers
 		Minerva::Buffer vertexBuffer(device, Minerva::Buffer::Type::VERTEX, vertices.data(), vertices.size() * sizeof(Vertex));
 		Minerva::Buffer indexBuffer(device, Minerva::Buffer::Type::INDEX, indices.data(), indices.size() * sizeof(uint16_t));
 
 		// Create textures to be used -> Turned into samplers in backend
-		//todo <<Load textures here. Directly start from DDS to save time>>
-		//todo std::vector<Minerva::Texture>
-		//todo textures.emplace_back(device, file_path, some settings) 
+		std::vector<Minerva::Texture> textures;
+		//textures.emplace_back(device, "Assets\\Textures\\TD_Checker_Base_Color.dds");
+		textures.emplace_back(device, "Assets\\Textures\\Stone_Wall 01_1K_Normal.dds");
 
 		// Write texture to descriptor set
-		//todo descriptorSet.update(descriptorLayout[1], textures.data(), textures.size()) <<Overload to take std::Span<Minerva::Textures>>>
+		descriptorSet.Update(descriptorLayouts[0], textures);
 		//! FFI Considerations - window.updateDescriptorSet(descriptorLayout[1], textures.data(), textures.size()) -> Texture
 
 		//! FFI Considerations - To write UBOs
@@ -214,7 +228,7 @@ int main(int argc, const char* argv[])
 			cmdBuffer.BindGraphicsPipeline(pipeline);
 			cmdBuffer.BindBuffer(vertexBuffer);
 			cmdBuffer.BindBuffer(indexBuffer);
-			//todo cmdBuffer.BindDescriptorSet(descriptorSet);
+			cmdBuffer.BindDescriptorSet(pipeline, descriptorSet);
 
 			// "Logic"
 

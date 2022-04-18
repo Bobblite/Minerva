@@ -1,10 +1,15 @@
 namespace Minerva::Vulkan
 {
-	Pipeline::Pipeline(std::shared_ptr<Minerva::Vulkan::Device> _device, std::shared_ptr<Minerva::Vulkan::Window> _window,
-		std::shared_ptr<Minerva::Vulkan::Renderpass> _renderpass, const Minerva::Shader* _shaders, int _shaderCount, std::shared_ptr<Minerva::Vulkan::VertexDescriptor> _vertDesc) :
+	Pipeline::Pipeline(std::shared_ptr<Minerva::Vulkan::Device> _device,
+		std::shared_ptr<Minerva::Vulkan::Window> _window,
+		std::shared_ptr<Minerva::Vulkan::Renderpass> _renderpass,
+		const Minerva::Shader* _shaders,
+		int _shaderCount,
+		std::shared_ptr<Minerva::Vulkan::DescriptorSet> _descriptorSet,
+		std::shared_ptr<Minerva::Vulkan::VertexDescriptor> _vertDesc) :
 		m_VKDeviceHandle{ _device }, m_VKWindowHandle{ _window }, m_VKRenderpassHandle{ _renderpass }, // Private handles
 		m_VKShaderHandles{}, m_VKShaderStages{}, m_VKPipelineLayout{ VK_NULL_HANDLE }, m_VKPipeline{ VK_NULL_HANDLE }, // Vulkan properties
-		m_VKVertexDescriptorHandle{_vertDesc}
+		m_VKDescriptorSetLayout{ _descriptorSet->GetVKDescriptorSetLayout() }, m_VKVertexDescriptorHandle{ _vertDesc }
 	{
 		// Internal function to convert Minerva::Shader::Type enum to a VkShaderStageFlagBits
 		constexpr auto ShaderType = []() constexpr
@@ -186,8 +191,8 @@ namespace Minerva::Vulkan
 			.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
 			.pNext = nullptr,
 			.flags = 0,
-			.setLayoutCount = 0,
-			.pSetLayouts = nullptr,
+			.setLayoutCount = 1,
+			.pSetLayouts = &m_VKDescriptorSetLayout,
 			.pushConstantRangeCount = 1,
 			.pPushConstantRanges = &pushConstant
 		};

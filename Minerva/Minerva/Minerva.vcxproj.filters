@@ -54,6 +54,9 @@
     <ClCompile Include="MinervaVulkan\minerva_vulkan_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tools\Minerva_DDSLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MinervaVulkan\minerva_vulkan_instance.h">
@@ -156,6 +159,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Minerva\Minerva_Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Minerva_DDSLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Minerva_PixelFormats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

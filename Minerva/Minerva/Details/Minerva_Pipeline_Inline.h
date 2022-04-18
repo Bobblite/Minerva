@@ -2,7 +2,13 @@
 
 namespace Minerva
 {
-	Pipeline::Pipeline(Minerva::Device& _device, Minerva::Window& _window, Minerva::Renderpass& _renderpass, const Minerva::Shader* _shaders, int _shaderCount, Minerva::VertexDescriptor& _vertDesc) :
+	Pipeline::Pipeline(Minerva::Device& _device,
+		Minerva::Window& _window,
+		Minerva::Renderpass& _renderpass,
+		const Minerva::Shader* _shaders,
+		int _shaderCount,
+		Minerva::DescriptorSet& _descSet,
+		Minerva::VertexDescriptor& _vertDesc) :
 		m_VKPipelineHandle{ nullptr }
 	{
 		m_VKPipelineHandle = std::make_shared<Minerva::Vulkan::Pipeline>
@@ -11,6 +17,7 @@ namespace Minerva
 				_renderpass.GetVKRenderpassHandle(),
 				_shaders,
 				_shaderCount,
+				_descSet.GetVKDescriptorSetHandle(),
 			_vertDesc.GetVKVertexDescriptorHandle());
 	}
 

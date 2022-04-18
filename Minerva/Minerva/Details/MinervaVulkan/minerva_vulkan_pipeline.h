@@ -5,8 +5,13 @@ namespace Minerva::Vulkan
 	class Pipeline
 	{
 	public:
-		Pipeline(std::shared_ptr<Minerva::Vulkan::Device> _device, std::shared_ptr<Minerva::Vulkan::Window> _window,
-			std::shared_ptr<Minerva::Vulkan::Renderpass> _renderpass, const Minerva::Shader* _shaders, int _shaderCount, std::shared_ptr<Minerva::Vulkan::VertexDescriptor> _vertDesc);
+		Pipeline(std::shared_ptr<Minerva::Vulkan::Device> _device,
+			std::shared_ptr<Minerva::Vulkan::Window> _window,
+			std::shared_ptr<Minerva::Vulkan::Renderpass> _renderpass,
+			const Minerva::Shader* _shaders,
+			int _shaderCount,
+			std::shared_ptr<Minerva::Vulkan::DescriptorSet> _descriptorSet,
+			std::shared_ptr<Minerva::Vulkan::VertexDescriptor> _vertDesc);
 		~Pipeline();
 
 		inline VkPipeline GetGraphicsPipeline() const { return m_VKPipeline; }
@@ -29,6 +34,7 @@ namespace Minerva::Vulkan
 		std::vector<VkPipelineShaderStageCreateInfo> m_VKShaderStages;
 		VkPipelineLayout m_VKPipelineLayout;
 		VkPipeline m_VKPipeline;
+		VkDescriptorSetLayout  m_VKDescriptorSetLayout;
 
 		// Minerva properties
 		//todo Minerva::Pipeline::Type m_Type;

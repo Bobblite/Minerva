@@ -265,6 +265,19 @@ namespace Minerva::Vulkan
 
 	void Device::CopyBuffer(VkBuffer _src, VkBuffer _dst, VkDeviceSize _size)
 	{
+		VkCommandBuffer commandBuffer{ BeginSingleTimeCommands() };
+
+		VkBufferCopy copyRegion{};
+		copyRegion.srcOffset = 0; // Optional
+		copyRegion.dstOffset = 0; // Optional
+		copyRegion.size = _size;
+		vkCmdCopyBuffer(commandBuffer, _src, _dst, 1, &copyRegion);
+
+		EndSingleTimeCommands(commandBuffer);
+	}
+
+	VkCommandBuffer Device::BeginSingleTimeCommands()
+	{
 		VkCommandBufferAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
@@ -278,26 +291,23 @@ namespace Minerva::Vulkan
 		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
-		// Begin recording
 		vkBeginCommandBuffer(commandBuffer, &beginInfo);
 
-		VkBufferCopy copyRegion{};
-		copyRegion.srcOffset = 0; // Optional
-		copyRegion.dstOffset = 0; // Optional
-		copyRegion.size = _size;
-		vkCmdCopyBuffer(commandBuffer, _src, _dst, 1, &copyRegion);
+		return commandBuffer;
+	}
 
-		vkEndCommandBuffer(commandBuffer);
+	void Device::EndSingleTimeCommands(VkCommandBuffer _cmdBuffer)
+	{
+		vkEndCommandBuffer(_cmdBuffer);
 
-		// Submit operation
 		VkSubmitInfo submitInfo{};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &commandBuffer;
+		submitInfo.pCommandBuffers = &_cmdBuffer;
 
 		vkQueueSubmit(m_VKMainQueue, 1, &submitInfo, VK_NULL_HANDLE);
 		vkQueueWaitIdle(m_VKMainQueue);
 
-		vkFreeCommandBuffers(m_VKDevice, m_VKCommandPool, 1, &commandBuffer);
+		vkFreeCommandBuffers(m_VKDevice, m_VKCommandPool, 1, &_cmdBuffer);
 	}
 }

@@ -6,4 +6,9 @@ namespace Minerva
 	{
 		m_VKTextureHandle = std::make_shared<Minerva::Vulkan::Texture>(_device.GetVKDeviceHandle(), _filepath);
 	}
+
+	inline std::shared_ptr<Minerva::Vulkan::Texture> Texture::GetVKTextureHandle() const
+	{
+		return m_VKTextureHandle;
+	}
 }
