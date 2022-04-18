@@ -95,6 +95,7 @@ int main(int argc, const char* argv[])
 			{
 				0, // Binding point
 				Minerva::DescriptorSet::DescriptorType::COMBINED_IMAGE_SAMPLER, // Descriptor type
+				//todo << DDS requires multiple textures. Will putting into 1 array work? (Talking about the line below) >>
 				1, // Descriptor count -> Can try and add more for multiple textures
 				Minerva::Shader::Type::FRAGMENT // Shader stage
 			}
@@ -109,8 +110,12 @@ int main(int argc, const char* argv[])
 
 		// Setup Pipeline
 		Minerva::Pipeline pipeline(device, window, renderpass, shaders.data(), shaders.size(), vertexDescriptor);
+		//todo Change pipeline to take in Descriptor Set Layouts
+		//todo DEPTH BUFFER DONT FORGET PLS
 		//todo Minerva::Pipeline pipeline(device, window, renderpass, shaders.data(), shaders.size(), vertexDescriptor, descriptorLayouts, descriptorLayouts.size());
 
+		//todo This to be replaced with model loading
+		//todo Look towards a mesh class
 		// Vertices and Indices raw data
 		const std::vector<Vertex> vertices{
 			// front
@@ -165,11 +170,12 @@ int main(int argc, const char* argv[])
 		Minerva::Buffer indexBuffer(device, Minerva::Buffer::Type::INDEX, indices.data(), indices.size() * sizeof(uint16_t));
 
 		// Create textures to be used -> Turned into samplers in backend
-		//todo std::vector<Minerva::Texture> textures
-		//todo textures.emplace_back(device, file_path, some settings)
+		//todo <<Load textures here. Directly start from DDS to save time>>
+		//todo std::vector<Minerva::Texture>
+		//todo textures.emplace_back(device, file_path, some settings) 
 
 		// Write texture to descriptor set
-		//todo descriptorSet.update(descriptorLayout[1], textures.data(), textures.size())
+		//todo descriptorSet.update(descriptorLayout[1], textures.data(), textures.size()) <<Overload to take std::Span<Minerva::Textures>>>
 		//! FFI Considerations - window.updateDescriptorSet(descriptorLayout[1], textures.data(), textures.size()) -> Texture
 
 		//! FFI Considerations - To write UBOs
